@@ -3,13 +3,27 @@ from skroutz_scraper import skroutz_scraper
 from best_price_scraper import best_price_scraper
 from colorama import Fore
 from colorama import init as colorama_init
-from skroutz_scraper import skroutz_search
+from skroutz_scraper import skroutz_scraper
 
-def get_product_data(query):
-    results = skroutz_search(query=query)
-    if results:
-        return results[0]  # Πρώτο match από Skroutz
-    return {"message": "No results found"}
+def get_product_data(query: str):
+    scraper = skroutz_scraper()
+    scraper.params["keyphrase"] = query.replace(" ", "+")
+    
+    # Manually simulate the selection without CLI input
+    session = scraper.session
+    response = session.get('https://www.skroutz.gr/search.json', params=scraper.params, headers=scraper.headers)
+    response_data = response.json()
+
+    if "redirectUrl" in response_data:
+        url = response_data["redirectUrl"].replace("html", "json")
+        response = session.get(url, params=scraper.params, headers=scraper.headers)
+        response_data = response.json()
+
+    pages = response_data['page']['total_pages']
+    scraper.process_items(pages, response)
+
+    return scraper.all_products
+
 
 
 if(__name__=="__main__"):
