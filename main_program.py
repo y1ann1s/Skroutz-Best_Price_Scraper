@@ -3,7 +3,7 @@ from skroutz_scraper import skroutz_scraper
 from best_price_scraper import best_price_scraper
 from colorama import Fore
 from colorama import init as colorama_init
-from Skroutz.skroutz_search import skroutz_search
+from skroutz_scraper import skroutz_search
 
 def get_product_data(query):
     results = skroutz_search(query=query)
