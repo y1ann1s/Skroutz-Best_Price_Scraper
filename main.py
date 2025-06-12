@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from Skroutz.main_program import get_product_data
+from main_program import get_product_data
 
 app = FastAPI()
 
