@@ -3,3 +3,10 @@ Requests==2.32.3
 selenium==4.23.1
 tls_client==0.2.1
 tqdm==4.65.0
+fastapi
+uvicorn
+requests
+beautifulsoup4
+selenium
+lxml
+pydantic
